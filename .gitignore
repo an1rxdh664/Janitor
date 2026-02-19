@@ -1,0 +1,8 @@
+# IGNORE THE VENV FOLDER
+venv/
+
+# IGNORE THE PYCACHE FOLDER
+__pycache__/
+
+# IGNORE THE NOTES
+Notes.md
