@@ -1,3 +1,6 @@
+# IGNORE THE GITIGNORE
+.gitignore
+
 # IGNORE THE VENV FOLDER
 venv/
 
@@ -6,3 +9,6 @@ __pycache__/
 
 # IGNORE THE NOTES
 Notes.md
+
+# IGNORE THE TEST APP FILE MADE JUST FOR TESTING THE ENDPOINT PURPOSES
+testApp.py
