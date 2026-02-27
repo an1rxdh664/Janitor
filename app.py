@@ -2,7 +2,7 @@ import json
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 
-description = ""
+description = "This API endpoint is currently made for testing purposes of my janitor model."
 
 app = FastAPI(
     title="Webhook Endpoint tester",
@@ -14,24 +14,33 @@ app = FastAPI(
     }
 )
 
-def log_events(req_headers, body_json):
+def event_logger(req_headers, body_json):
     print("Inside event logger\n")
 
     try:
-        number = body_json["number"]
+        event = req_headers.get("x-github-event")
 
-        full_name = body_json["repository"]["full_name"]
+        if(event == "ping"):
+            print("Ping Event, Successfull")
+            return {"Connection successful": "Ping event successfully logged."}
+        
+        elif(event == "pull_request"):
+            print("Event is a pull request : \n")
+            
+            pr_number = body_json.get("number")
+            repository_full_name = body_json.get("repository").get("full_name")
+            action_type = body_json.get("action")
+            diff_url = body_json.get("pull_request").get("diff_url")
+            head_sha = body_json.get("pull_request").get("head").get("sha")
+            
+            print("Details of the PR : \n")
+            print(f"Pull request number : {pr_number}")
+        
+            print(f"Full Repository Name : {repository_full_name} | Action : {action_type}\n")
+            print(f"Diff URL : {diff_url}\nHead SHA : {head_sha}\n")
 
-        action = body_json["action"]
-        
-        event_type = req_headers["x-github-event"]
-        
-        diff_url = body_json["pull_request"]["diff_url"]
-        
-        head_sha = body_json["pull_request"]["head"]["sha"]
-
-        print(f"Full Repository Name : {full_name} | Number : {number} | Action : {action}\n")
-        print(f"Event Type : {event_type}\nDiff URL : {diff_url}\nHead SHA : {head_sha}\n")
+        else:
+            return {"message": "Event is neither a ping event or a pull request"}
 
     except Exception as e:
         return {"Error": "Some error occured while fetching data"}
@@ -41,10 +50,17 @@ def log_events(req_headers, body_json):
 
     return
 
-@app.get("/info")
-async def get_info():
-    about_info = ""
-    return about_info
+@app.get("/")
+async def server_info():
+    return {
+        "Description": description,
+        "Creator": "Anirudh Kushwah",
+        "Contact Details": {
+            "E-mail" : "anirudhhh637@gmail.com",
+            "Linked-In" : "https://www.linkedin.com/in/anirudh-kushwah-b885483a3/",
+            "Twitter / X" : "https://x.com/anirxdh14"
+        }
+    }
 
 @app.post("/webhook")
 async def get_webhook(request: Request):  
@@ -59,8 +75,7 @@ async def get_webhook(request: Request):
         body_bytes_decoded = req_body_bytes.decode("utf-8")
         body_json = json.loads(body_bytes_decoded)
 
-
-        log_events(req_headers, body_json)
+        event_logger(req_headers, body_json)
 
     except json.JSONDecodeError as e:
         return {"Error": "Invalid JSON Data", "details": str(e)}
