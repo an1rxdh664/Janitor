@@ -2,6 +2,15 @@ import json
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 
+import os
+from dotenv import load_dotenv
+
+import hmac, hashlib, base64
+from hmac import compare_digest
+
+load_dotenv() # LOAD VARIABLES FROM .env
+WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET")
+
 description = "This API endpoint is currently made for testing purposes of my janitor model."
 
 app = FastAPI(
@@ -14,19 +23,24 @@ app = FastAPI(
     }
 )
 
-def event_logger(req_headers, body_json):
+def verify_request(headers, body, secret: str):
+    # RETRIEVING THE GITHUB SIGNATURE HEADER
+    signature_header = headers.get('x-hub-signature-256')
+
+    # ENCODE THE SECRET INTO BYTES
+    secret_bytes = secret.encode('utf-8')
+
+    computated_signature = "sha256=" + hmac.new(
+        key=secret_bytes,
+        msg=body,
+        digestmod=hashlib.sha256
+    ).hexdigest()
+
+    return compare_digest(computated_signature, signature_header)
+
+def event_logger(body_json):
     print("Inside event logger\n")
-
-    try:
-        event = req_headers.get("x-github-event")
-
-        if(event == "ping"):
-            print("Ping Event, Successfull")
-            return {"Connection successful": "Ping event successfully logged."}
-        
-        elif(event == "pull_request"):
-            print("Event is a pull request : \n")
-            
+    try:            
             pr_number = body_json.get("number")
             repository_full_name = body_json.get("repository").get("full_name")
             action_type = body_json.get("action")
@@ -39,15 +53,10 @@ def event_logger(req_headers, body_json):
             print(f"Full Repository Name : {repository_full_name} | Action : {action_type}\n")
             print(f"Diff URL : {diff_url}\nHead SHA : {head_sha}\n")
 
-        else:
-            return {"message": "Event is neither a ping event or a pull request"}
-
     except Exception as e:
         return {"Error": "Some error occured while fetching data"}
-
-
     print("\nLogging done\n")
-
+    
     return
 
 @app.get("/")
@@ -67,18 +76,35 @@ async def get_webhook(request: Request):
     try:
         # STORE HEADERS
         req_headers = request.headers
-
+        
         # Request body sent by the Github POST is in bytes which needs to be converted into a JSON string
         req_body_bytes = await request.body()
 
-        # But first it needs to be decoded into the utf-8 standard encoding
-        body_bytes_decoded = req_body_bytes.decode("utf-8")
-        body_json = json.loads(body_bytes_decoded)
+        # VERIFY IF THE REQEUST IS VALID OR NOT
+        request_status = verify_request(req_headers, req_body_bytes, WEBHOOK_SECRET)
+        
+        if(request_status):
+            # EVENT OCCURED
+            event = req_headers.get("x-github-event")
 
-        event_logger(req_headers, body_json)
+            # HANDLE THE PING EVENT
+            if(event == "ping"):
+                return {"message": "Event was a ping event"}
+            
+            # EVENT GATING
+            elif(event == "pull_request"):
+                # But first the body needs to be decoded into the utf-8 standard encoding
+                body_bytes_decoded = req_body_bytes.decode("utf-8")
+                body_json = json.loads(body_bytes_decoded)
 
-    except json.JSONDecodeError as e:
-        return {"Error": "Invalid JSON Data", "details": str(e)}
-    
+                event_logger(body_json)
 
-    return {"message": "Bytes successfully decoded into JSON string."}
+                return {"message": "Event was a PR"}
+            else:
+                return {"message": "Event was neither a pr nor a ping event"}    
+        else:
+            return {"Validation Error": "The secret key could not be validated"}
+
+
+    except Exception as e:
+        return {"Error": "Invalid Data", "details": str(e)}
