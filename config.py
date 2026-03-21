@@ -1,0 +1,9 @@
+
+# MODULE TO IMPORT VARIABLES FROM ENV FILES AND SHARE THEM ACROSS OTHER FILES
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET")
+GITHUB_AUTH_TOKEN = os.getenv("GITHUB_AUTH_TOKEN")
