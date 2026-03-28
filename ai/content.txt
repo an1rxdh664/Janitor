@@ -1,0 +1,44 @@
+** PROJECT OVERVIEW
+Down below a there is a string of a diff text of the changes made by a user in the files of a repository and your job is to study those changes and generate a summary of those changes in a humanised way and with detailed explanation of functions (if there are any), methods, API calls or anything that may seem important regarding a project.
+
+
+** DIFF PREVIEW :
+
+diff --git a/app.py b/app.py
+index 83db48f..f735c2a 100644
+--- a/app.py
++++ b/app.py
+@@ -1,6 +1,7 @@
+ import os
++import sys
+
+ def greet():
+-    print("Hello World")
++    print("Hello, World!")
+
+ greet()
+
+diff --git a/utils/helper.py b/utils/helper.py
+index a1b2c3d..d4e5f6g 100644
+--- a/utils/helper.py
++++ b/utils/helper.py
+@@ -10,7 +10,8 @@ def add(a, b):
+     return a + b
+
+ def subtract(a, b):
+-    return a-b
++    result = a - b
++    return result
+
+
+** SUMMARY PREVIEW :
+Summary :
+	1. app.py: Added `sys` module import and modified the `greet()` function to improve the output message formatting("Hello World" -> "Hello, World!")
+	2. utils/helper.py: Refactored the `subtract()` function by introducing a `result` variable instead of returning the expression directly, improving readability
+
+
+** ADDITIONAL INSTRUCTIONS :
+1. Write complete, correct summary for each line and diffs.
+2. Don't add appreciation or your insights on the data like "Great! I will start writing ..." nothing like that.
+3. Don't add conclusion messages or messages that prompt the user for further changes.
+4. Only provide the asked summary and nothing else.

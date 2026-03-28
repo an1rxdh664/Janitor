@@ -2,9 +2,9 @@ import json
 from fastapi import FastAPI, Request
 
 from core.security import verify_request
-from core.github_client import fetch_diff_data, createURL
+from core.github_client import fetch_diff_data, createURL, clearDiffText
 from utils.logger import event_logger
-
+from ai.engine import generate_summary
 
 description = "This API endpoint is currently made only for testing purposes of my janitor model."
 
@@ -50,6 +50,7 @@ async def get_webhook(request: Request):
 
                 url = createURL(requestBody)                
                 data = fetch_diff_data(url)
+                generated_summary = generate_summary(data)
 
                 return {"message": "Event was a PR"}
             else:
