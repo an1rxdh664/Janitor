@@ -2,7 +2,7 @@ import json
 from fastapi import FastAPI, Request
 
 from core.security import verify_request
-from core.github_client import fetch_diff_data, createURL, clearDiffText
+from core.github_client import fetch_diff_data, createURL, regenerate_description, send_patch
 from utils.logger import event_logger
 from ai.engine import generate_summary
 
@@ -38,21 +38,41 @@ async def get_webhook(request: Request):
 
         request_status = verify_request(req_headers, req_body_bytes)
         
+        decoded_request_body = req_body_bytes.decode("utf-8") 
+        request_body = json.loads(decoded_request_body)
+        
         if(request_status):
             event = req_headers.get("x-github-event")
+            action = request_body.get("action")
 
             if(event == "ping"):
                 return {"message": "Event was a ping event"}
             
-            elif(event == "pull_request"):
-                decoded_request_body = req_body_bytes.decode("utf-8") 
-                requestBody = json.loads(decoded_request_body)
-
-                url = createURL(requestBody)                
+            if(action == "closed"):
+                return {"message": "The PR was closed"}
+            
+            elif(action == "edited"):
+                return {"message": "The PR information was edited"}
+            
+            elif(event == "pull_request" and (action == "opened" or action == "synchronize")):
+                url = createURL(request_body)                
                 data = fetch_diff_data(url)
+                
                 generated_summary = generate_summary(data)
+                pr_description_body = request_body.get("pull_request").get("body")
 
-                return {"message": "Event was a PR"}
+                regenerated_pr_body = regenerate_description(pr_description_body, generated_summary)
+
+                patch_response = send_patch(url, regenerated_pr_body)
+
+                if patch_response == 401:
+                    return {"message": f"{patch_response}: Bad Token"}
+                elif patch_response == 403:
+                    return {"message": f"{patch_response}: Permission Issue"}
+                elif patch_response == 422:
+                    return {"message": f"{patch_response}: Invalid Payload"}
+
+                return {"message": f"{patch_response} : Successfull"}
             else:
                 return {"message": "Event was neither a pr nor a ping event"}    
         else:
