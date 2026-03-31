@@ -1,0 +1,12 @@
+# BACKEND
+fastapi
+uvicorn
+
+# API
+requests
+
+# .env
+python-dotenv
+
+# LLM
+groq
