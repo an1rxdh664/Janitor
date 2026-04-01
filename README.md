@@ -49,6 +49,15 @@ The project is built with a modular "separation of concerns" approach :
    ```
    uvicorn app:app --reload
    ```
+   * Additional note - You also need to set up `ngrok` for this API to generate a working URL to provide into the Webhook URL section of your repository.
+      
+      * Just setup `ngrok` and run it, in a separate terminal, on the `port` your API service is running on, For Example :
+      
+         * If my API is running on port `8000` :
+
+              ```
+              ngrok http 8000
+              ``` 
 
 * Message : This project is still under development, i am still working on making new changes but if anyone would like to contribute then please do so, Thankyou for checking my project.
 
