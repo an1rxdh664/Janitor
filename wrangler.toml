@@ -1,0 +1,6 @@
+name = "janitor-bot"
+main = "app.py" 
+compatibility_date = "2024-03-01"
+
+[python_worker]
+enabled = true
