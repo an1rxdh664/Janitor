@@ -1,4 +1,4 @@
-import hmac, hashlib, base64
+import hmac, hashlib
 from hmac import compare_digest
 
 from config import WEBHOOK_SECRET

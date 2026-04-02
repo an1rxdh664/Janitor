@@ -1,4 +1,4 @@
-import requests
+import httpx
 from config import GITHUB_FINE_GRAINED_TOKEN
 
 headers = {
@@ -14,8 +14,9 @@ def createURL(body):
 
     return f"https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}"
 
-def fetch_diff_data(diff_url):    
-    response = requests.get(diff_url, headers=headers)
+async def fetch_diff_data(diff_url):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(diff_url, headers=headers)
     
     if response.status_code == 200:
         return response.text

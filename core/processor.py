@@ -75,7 +75,7 @@ async def construct_data(data):
         
         elif event == "pull_request" and action in ["opened", "synchronize"]:
             url = createURL(body)                
-            data = fetch_diff_data(url)
+            data = await fetch_diff_data(url)
             
             generated_summary = generate_summary(data)
             pr_description_body = body.get("pull_request").get("body")
