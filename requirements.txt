@@ -1,4 +1,13 @@
+# BACKEND
 fastapi
+uvicorn
+
+# API
+requests
 httpx
-python-multipart
+
+# .env
+python-dotenv
+
+# LLM
 groq
