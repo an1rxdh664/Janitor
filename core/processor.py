@@ -1,4 +1,4 @@
-import json, requests
+import json, httpx
 
 from core.security import verify_request
 from core.github_client import createURL, fetch_diff_data, regenerate_description
@@ -35,24 +35,25 @@ async def receive_data(request):
 
 
 # FUNCTION TO SEND IT TO GITHUB
-def send_data(url, body):
-    response = requests.patch(
-            url = url,
-            headers = {
-                "Authorization": f"Bearer {GITHUB_FINE_GRAINED_TOKEN}",
-                "Accept": "application/vnd.github+json",
-                "Content-Type": "application/json"
-            },
-            json = {
-                "body": body
-            },
-            timeout=15
-        )
+async def send_data(url, body):
+    async with httpx.AsyncClient() as client:
+        response = await client.patch(
+                url = url,
+                headers = {
+                    "Authorization": f"Bearer {GITHUB_FINE_GRAINED_TOKEN}",
+                    "Accept": "application/vnd.github+json",
+                    "Content-Type": "application/json"
+                },
+                json = {
+                    "body": body
+                },
+                timeout=15.0
+            )
     
     return response.status_code
 
 # FUNCTION TO GENERATE SUMMARY AND DESCRIPTION
-def construct_data(data):
+async def construct_data(data):
 
     status = data.get('status')
     body = data.get('body')
@@ -81,7 +82,7 @@ def construct_data(data):
 
             regenerated_pr_body = regenerate_description(pr_description_body, generated_summary)
 
-            patch_response = send_data(url, regenerated_pr_body)
+            patch_response = await send_data(url, regenerated_pr_body)
             
             if patch_response == 401:
                 print(f"{patch_response}: Bad Token")

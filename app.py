@@ -31,6 +31,12 @@ async def get_webhook(request: Request, background: BackgroundTasks):
     try:
         received_data = await receive_data(request)
         
+        if not received_data.get("status"):
+            return {
+                "status": False,
+                "error": "Invalid Signature"
+            }
+
         background.add_task(construct_data, {
             "body": received_data["body"],
             "event": received_data["event"],
