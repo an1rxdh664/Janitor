@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, BackgroundTasks
 
 from core.processor import receive_data, construct_data
 
-description = "This API endpoint is currently made only for testing purposes of my janitor model."
+description = "This AI Janitor model uses GitHub webhooks to listen for diffs between pull request events and generates a summary of it and sends it back to the PR description"
 
 app = FastAPI(
     title="Webhook Endpoint tester",
