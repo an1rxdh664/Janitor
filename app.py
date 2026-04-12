@@ -14,7 +14,7 @@ app = FastAPI(
     }
 )
 
-@app.get("/")
+@app.get("/", methods=["GET", "HEAD"])
 async def server_info():
     return {
         "Description": description,
