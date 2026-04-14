@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codebase Janitor & Documentation Bot</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#hero">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#manual">MANUAL</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+  </header>
+
+  <div class="hero" id="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>CODEBASE "JANITOR" &<br>DOCUMENTATION BOT</h1>
+        <p class="tagline">Your Codebase, Automatically Polished.</p>
+        <p class="hero-desc">
+          An AI-driven maintenance bot that handles the "boring stuff"—from README generation
+          to documentation updates—so you can focus on shipping features.
+        </p>
+        <div class="btn-row">
+          <a href="https://github.com/apps/codebase-janitor-bot" target="_blank"><button class="btn-install">INSTALL</button></a>
+          <a href="https://github.com/an1rxdh664/Janitor.git" target="_blank"><button class="btn-github">VIEW ON GITHUB</button></a>
+        </div>
+      </div>
+      <div class="pixel-grid" id="pixel-grid" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="section-inner">
+      <p class="section-label">WHAT IS THE JANITOR?</p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">◈</div>
+          <p class="card-title">TECHNICAL DEBT REDUCTION</p>
+          <p class="card-desc">Automatically scans your repo for outdated comments, dead code references, and mismatched function signatures—flagging them before they become bugs.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">◉</div>
+          <p class="card-title">DOCUMENTATION SYNCING</p>
+          <p class="card-desc">Detects when your code changes outpace your docs. Generates diff-aware documentation patches and keeps your README and API docs in sync with your actual implementation.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">◎</div>
+          <p class="card-title">STRUCTURAL ANALYSIS</p>
+          <p class="card-desc">Maps your repository's architecture and identifies files that violate naming conventions, dependency cycles, or layout standards defined in your config.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="manual">
+    <div class="section-inner">
+      <p class="section-label">USAGE MANUAL</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <p class="step-title">INSTALL</p>
+            <p class="step-body">Head to the GitHub Marketplace and click "Install" on the Codebase Janitor app. Select the organization or personal account you want to activate it on, then choose which repositories to include.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <p class="step-title">GRANT PERMISSIONS</p>
+            <p class="step-body">During installation, GitHub will prompt you to authorize two scopes: Read access to repository contents and metadata, and Write access to Pull Requests. No admin rights, secrets, or CI credentials are ever required.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <p class="step-title">REVIEW PULL REQUESTS</p>
+            <p class="step-body">Once installed, the bot monitors your repository for documentation drift and code issues. It automatically opens Pull Requests with suggested fixes for your team to review and merge—no manual trigger needed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="notice-section">
+    <div class="notice">
+      <span class="notice-icon">⚠</span>
+      <div>
+        <p class="notice-title">UNDER MAINTENANCE</p>
+        <p class="notice-body">We are currently refining the direct README-edit feature. Currently, the bot generates suggested content for manual approval. Automatic commits are coming soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="info">
+      <p>Owner : Anirudh Kushwah</p>
+      <p>Email : <a href="mailto:anirudhhh637@gmail.com">anirudhhh637@gmail.com</a></p>
+      <div class="socials">
+        <p><a href="https://github.com/an1rxdh664" target="_blank">GitHub Profile</a></p>
+        <p><a href="https://www.linkedin.com/in/anirudh-kushwah-b885483a3/" target="_blank">LinkedIn Profile</a></p>
+      </div>
+    </div>
+    <div class="license">
+      <p>CODEBASE JANITOR — OPEN SOURCE — MIT LICENSE</p>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+
+</body>
+</html>
