@@ -1,0 +1,259 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      min-height: 100vh;
+      color: #0d1117;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* NAV */
+    header {
+      border-bottom: 1px solid #e5e7eb;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      padding: 20px 32px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    nav a {
+      text-decoration: none;
+      color: #1a2c23;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      transition: color 0.15s;
+    }
+    nav a:hover { color: #2ecc71; }
+
+    /* HERO */
+    .hero {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 56px 32px 64px;
+    }
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .hero-text { max-width: 480px; }
+    h1 {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      color: #0d1117;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .tagline {
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 700;
+      color: #1a2c23;
+      margin-bottom: 14px;
+    }
+    .hero-desc {
+      font-size: 13px;
+      color: #4b5563;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 380px;
+    }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn-install {
+      background-color: #2ecc71;
+      color: #0d1117;
+      border: none;
+      padding: 10px 22px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.15s, transform 0.1s;
+      box-shadow: 3px 3px 0px #1a3d2b;
+    }
+    .btn-install a {
+      text-decoration: none;
+      color: #0d1117;
+    }
+    .btn-install:hover { background-color: #27ae60; transform: translateY(-1px); }
+    .btn-install:active { transform: translateY(1px); box-shadow: 1px 1px 0px #1a3d2b; }
+
+    .btn-github {
+      background-color: #1a2c23;
+      color: #f3f4f6;
+      border: none;
+      padding: 10px 22px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.15s, transform 0.1s;
+      box-shadow: 3px 3px 0px #0a1510;
+    }
+    .btn-github:hover { background-color: #0d1117; transform: translateY(-1px); }
+    .btn-github:active { transform: translateY(1px); box-shadow: 1px 1px 0px #0a1510; }
+
+    /* PIXEL GRID */
+    .pixel-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 8px;
+      flex-shrink: 0;
+    }
+    .pixel-row { display: flex; gap: 6px; }
+    .pixel {
+      width: 28px;
+      height: 28px;
+      border-radius: 3px;
+    }
+
+    /* SECTIONS */
+    section {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 56px 32px;
+    }
+    section:last-of-type { border-bottom: none; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: #6b7280;
+      font-weight: 700;
+      margin-bottom: 32px;
+      text-transform: uppercase;
+    }
+
+    /* FEATURE CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 20px 20px 22px;
+    }
+    .card-icon {
+      font-size: 20px;
+      color: #2ecc71;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #0d1117;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 24px; max-width: 560px; }
+    .step { display: flex; gap: 16px; align-items: flex-start; }
+    .step-num {
+      width: 32px; height: 32px;
+      background-color: #1a2c23;
+      color: #2ecc71;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #0d1117;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .step-body {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    /* MAINTENANCE NOTICE */
+    .notice-section { border-bottom: none; padding-bottom: 40px; }
+    .notice {
+      border: 1.5px solid #fbbf24;
+      border-left: 4px solid #f59e0b;
+      border-radius: 5px;
+      padding: 16px 20px;
+      background: #fffbeb;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .notice-icon { font-size: 15px; margin-top: 1px; flex-shrink: 0; }
+    .notice-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #92400e;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .notice-body { font-size: 12px; color: #78350f; line-height: 1.7; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #e5e7eb;
+      padding: 20px 32px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    footer .socials {
+        display: flex;
+        gap: 20px;
+    }
+    footer p, footer a {
+        font-size: 11px;
+        color: #9ca3af;
+        letter-spacing: 0.08em;
+        line-height: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .pixel-grid { display: none; }
+      nav { gap: 24px; }
+    }
